@@ -1,4 +1,4 @@
-package com.rocketta.importer.core.model
+package com.rocketta.importer.core
 
 import java.sql.Timestamp
 

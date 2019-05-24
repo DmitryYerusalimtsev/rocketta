@@ -1,7 +1,9 @@
 package com.rocketta.importer.core
 
-import com.rocketta.importer.core.model.Message
+trait Source[+MESSAGE <: Message] {
+  def read(): MESSAGE
+}
 
-trait Source[+MESSAGE <: Message] {}
-
-trait Sink[+MESSAGE <: Message] {}
+trait Sink[-MESSAGE <: Message] {
+  def save(message: MESSAGE): Unit
+}
