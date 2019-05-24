@@ -3,16 +3,14 @@ package com.rocketta.importer.kafkastreams
 import java.util.Properties
 
 import com.rocketta.importer.config.EnvironmentVariables
-import com.rocketta.importer.core.{Message, Source}
+import com.rocketta.importer.core.{Message, StreamProcessor}
 import com.rocketta.importer.kafkastreams.serde.{JsonDeserializer, JsonSerializer}
-import org.apache.kafka.common.serialization.Serdes
-import org.apache.kafka.streams.kstream.{Consumed, KStream}
+import org.apache.kafka.common.serialization.{Serde, Serdes}
 import org.apache.kafka.streams.{KafkaStreams, StreamsBuilder, StreamsConfig}
 
-trait StreamProcessor[M <: Message] extends Source[M] with EnvironmentVariables {
+trait KafkaStreamsProcessor[M <: Message] extends StreamProcessor[M] with EnvironmentVariables {
 
   protected val appId: String
-  protected val topic: String
 
   private[this] val props: Properties = {
     val p = new Properties()
@@ -21,16 +19,15 @@ trait StreamProcessor[M <: Message] extends Source[M] with EnvironmentVariables 
     p
   }
 
-  implicit val messageSerde = {
+  protected val defaultSerde: Serde[M] = {
     val serializer = new JsonSerializer[M]
     val deserializer = new JsonDeserializer[M]
-    val messageSerde = Serdes.serdeFrom(serializer, deserializer)
-    Consumed.`with`(Serdes.String(), messageSerde)
+    Serdes.serdeFrom(serializer, deserializer)
   }
 
-  def start(): Unit = streams.start()
+  def start(): Unit = streams().start()
 
-  private[this] def streams(implicit consumed: Consumed[String, M]) = {
+  private[this] def streams() = {
 
     val builder: StreamsBuilder = new StreamsBuilder
     process(builder)
@@ -40,5 +37,5 @@ trait StreamProcessor[M <: Message] extends Source[M] with EnvironmentVariables 
     streams
   }
 
-  protected def process(builder: StreamsBuilder): KStream[String, M]
+  protected def process(builder: StreamsBuilder): Unit
 }

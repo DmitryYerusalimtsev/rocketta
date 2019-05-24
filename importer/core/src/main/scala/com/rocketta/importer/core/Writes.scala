@@ -16,10 +16,3 @@ trait Writes[SINK <: Sink[MESSAGE], MESSAGE <: Message] extends LazyLogging {
     }
   }
 }
-
-object Writes {
-  def readFrom[SINK <: Sink[Message], MESSAGE <: Message]
-  (sink: SINK, message: MESSAGE)(implicit ev: Writes[SINK, MESSAGE]): Unit = {
-    ev.write(sink, message)
-  }
-}
