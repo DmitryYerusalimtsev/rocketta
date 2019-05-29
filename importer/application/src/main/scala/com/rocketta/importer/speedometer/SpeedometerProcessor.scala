@@ -7,7 +7,7 @@ import org.apache.kafka.common.serialization.Serdes
 import org.apache.kafka.streams.StreamsBuilder
 import org.apache.kafka.streams.kstream.Consumed
 
-final class SpeedometerProcessor extends KafkaStreamsProcessor[Speed] with JsonSerde[Speed] {
+class SpeedometerProcessor extends KafkaStreamsProcessor[Speed] with JsonSerde[Speed] {
   this: Sink[Speed] =>
 
   protected val appId: String = "speedometer-processor"

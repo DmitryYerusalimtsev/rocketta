@@ -14,9 +14,9 @@ class JsonSerializer[T] extends Serializer[T] {
   override def serialize(topic: String, data: T): Array[Byte] = {
     data match {
       case null => null
-      case _ => {
-        val json = gson.toJson(_)
-        json().getBytes()
+      case dat => {
+        val json = gson.toJson(dat)
+        json.getBytes()
       }
     }
   }
