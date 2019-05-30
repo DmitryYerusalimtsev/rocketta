@@ -1,4 +1,4 @@
-package com.rocketta.importer.config
+package com.rocketta.processors.kafkastreams.config
 
 trait EnvironmentVariables {
 

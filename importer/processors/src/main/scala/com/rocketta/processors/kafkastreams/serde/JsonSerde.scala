@@ -1,4 +1,4 @@
-package com.rocketta.importer.kafkastreams.serde
+package com.rocketta.processors.kafkastreams.serde
 
 import com.rocketta.importer.core.Message
 import org.apache.kafka.common.serialization.{Serde, Serdes}

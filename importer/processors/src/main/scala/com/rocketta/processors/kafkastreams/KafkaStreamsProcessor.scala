@@ -1,9 +1,9 @@
-package com.rocketta.importer.kafkastreams
+package com.rocketta.processors.kafkastreams
 
 import java.util.Properties
 
-import com.rocketta.importer.config.EnvironmentVariables
 import com.rocketta.importer.core.{Message, StreamProcessor}
+import com.rocketta.processors.kafkastreams.config.EnvironmentVariables
 import org.apache.kafka.streams.{KafkaStreams, StreamsBuilder, StreamsConfig}
 
 trait KafkaStreamsProcessor[M <: Message] extends StreamProcessor[M] with EnvironmentVariables {

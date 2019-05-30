@@ -6,14 +6,10 @@ lazy val commonSettings = Seq(
   scalaVersion := "2.12.8"
 )
 
-val kafkaStreams
-
 val janusgraphVersion = "0.3.0"
 val janusgraph = Seq(
   "org.janusgraph" % "janusgraph-core" % janusgraphVersion,
-  "org.janusgraph" % "janusgraph-berkeleyje" % janusgraphVersion,
-  "org.janusgraph" % "janusgraph-lucene" % janusgraphVersion,
-  "org.apache.tinkerpop" % "gremlin-server" % "3.3.3"
+  "org.apache.tinkerpop" % "gremlin-driver" % "3.3.3"
 )
 
 val scalaTest = Seq(
@@ -35,12 +31,17 @@ lazy val core = (project in file("core"))
     )
   )
 
-lazy val application = (project in file("application"))
+lazy val processors = (project in file("processors"))
   .settings(
     commonSettings,
 
-    libraryDependencies ++= scalaTest ++ Seq(
+    libraryDependencies ++= logging ++ Seq(
       "org.apache.kafka" % "kafka-streams" % "2.2.0",
       "com.google.code.gson" % "gson" % "2.8.5"
     )
   ).dependsOn(core)
+
+lazy val application = (project in file("application"))
+  .settings(
+    commonSettings
+  ).dependsOn(core, processors)
