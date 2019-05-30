@@ -1,6 +1,5 @@
 package com.rocketta.importer
 
-import com.rocketta.importer.graph.TestSink
 import com.rocketta.importer.speedometer.SpeedometerProcessor
 
 object Application extends App {

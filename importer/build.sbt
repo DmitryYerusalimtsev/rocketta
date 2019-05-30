@@ -41,7 +41,14 @@ lazy val processors = (project in file("processors"))
     )
   ).dependsOn(core)
 
+lazy val sinks = (project in file("sinks"))
+  .settings(
+    commonSettings,
+
+    libraryDependencies ++= logging ++ janusgraph
+  ).dependsOn(core)
+
 lazy val application = (project in file("application"))
   .settings(
     commonSettings
-  ).dependsOn(core, processors)
+  ).dependsOn(core, processors, sinks)
