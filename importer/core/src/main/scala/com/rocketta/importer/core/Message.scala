@@ -1,7 +1,7 @@
 package com.rocketta.importer.core
 
-import java.sql.Timestamp
+import java.util.Date
 
 abstract class Message {
-  val timestamp: Timestamp
+  val timestamp: Date
 }

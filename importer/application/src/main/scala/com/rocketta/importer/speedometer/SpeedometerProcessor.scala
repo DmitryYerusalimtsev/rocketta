@@ -10,7 +10,7 @@ import org.apache.kafka.streams.kstream.Consumed
 class SpeedometerProcessor extends KafkaStreamsProcessor[Speed] with JsonSerde[Speed] {
   this: Sink[Speed] =>
 
-  protected val appId: String = "speedometer-processor"
+  protected def appId: String = "speedometer-processor"
   private[this] val topic: String = "speedometer-telemetry"
 
   override protected def process(builder: StreamsBuilder): Unit = {

@@ -1,11 +1,11 @@
 package com.rocketta.importer.speedometer
 
-import java.sql.Timestamp
+import java.util.Date
 
 import com.rocketta.importer.core.Message
 
 case class Speed(
                   deviceId: String,
                   value: Double,
-                  timestamp: Timestamp
+                  timestamp: Date
                 ) extends Message {}

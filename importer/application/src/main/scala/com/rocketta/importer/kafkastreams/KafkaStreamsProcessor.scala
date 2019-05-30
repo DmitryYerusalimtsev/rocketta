@@ -8,7 +8,7 @@ import org.apache.kafka.streams.{KafkaStreams, StreamsBuilder, StreamsConfig}
 
 trait KafkaStreamsProcessor[M <: Message] extends StreamProcessor[M] with EnvironmentVariables {
 
-  protected val appId: String
+  protected def appId: String
 
   private[this] val props: Properties = {
     val p = new Properties()
