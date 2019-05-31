@@ -13,7 +13,6 @@ public class Application {
             final JanusGraphInitializer initializer = new JanusGraphInitializer(propFileName);
             initializer.defineSchema();
         } catch (ConfigurationException e) {
-        } catch (ConfigurationException e) {
             e.printStackTrace();
         }
     }
