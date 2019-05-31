@@ -40,7 +40,7 @@ public abstract class BigGraph implements AutoCloseable {
         }
     }
 
-    public void defineSchema() {
+    void defineSchema() {
         final String req = schemaDefinition();
         final ResultSet resultSet = client.submit(req);
         Stream<Result> futureList = resultSet.stream();

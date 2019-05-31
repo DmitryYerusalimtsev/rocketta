@@ -7,8 +7,6 @@ public class Corporation implements EntityConfiguration {
 
         schema.append("management.makeVertexLabel(\"corporation\").make(); ");
 
-        schema.append("PropertyKey name = management.makePropertyKey(\"id\").dataType(String.class).make(); ");
-        schema.append("management.makePropertyKey(\"name\").dataType(String.class).make(); ");
         schema.append("management.makePropertyKey(\"address\").dataType(String.class).make(); ");
 
         schema.append("management.makeEdgeLabel(\"builds\").multiplicity(Multiplicity.MANY2ONE).make(); ");

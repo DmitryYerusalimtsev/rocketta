@@ -7,8 +7,6 @@ public class Rocket implements EntityConfiguration {
 
         schema.append("management.makeVertexLabel(\"rocket\").make(); ");
 
-        schema.append("PropertyKey name = management.makePropertyKey(\"id\").dataType(String.class).make(); ");
-        schema.append("management.makePropertyKey(\"name\").dataType(String.class).make(); ");
         schema.append("management.makePropertyKey(\"model\").dataType(String.class).make(); ");
 
         schema.append("management.makeEdgeLabel(\"contains\").multiplicity(Multiplicity.MULTI).make(); ");
