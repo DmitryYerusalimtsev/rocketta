@@ -7,7 +7,7 @@ import org.reflections.Reflections;
 
 import java.util.Set;
 
-public class JanusGraphInitializer extends BigGraph {
+public class JanusGraphInitializer extends BigGraphInitializer {
 
     JanusGraphInitializer(String propFileName) throws ConfigurationException {
         super(propFileName);
