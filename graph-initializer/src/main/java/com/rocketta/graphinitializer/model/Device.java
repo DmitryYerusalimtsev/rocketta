@@ -1,17 +1,18 @@
 package com.rocketta.graphinitializer.model;
 
-import org.janusgraph.core.Multiplicity;
-import org.janusgraph.core.schema.JanusGraphManagement;
-
 public class Device implements EntityConfiguration {
 
-    public void configure(JanusGraphManagement management) {
-        management.makeVertexLabel("device").make();
+    public String configure() {
+        final StringBuilder schema = new StringBuilder();
 
-        management.makePropertyKey("id").dataType(String.class).make();
-        management.makePropertyKey("name").dataType(String.class).make();
-        management.makePropertyKey("device_type").dataType(DeviceType.class).make();
+        schema.append("management.makeVertexLabel(\"device\").make(); ");
 
-        management.makeEdgeLabel("hasTelemetry").multiplicity(Multiplicity.ONE2ONE).make();
+        schema.append("PropertyKey name = management.makePropertyKey(\"id\").dataType(String.class).make(); ");
+        schema.append("management.makePropertyKey(\"name\").dataType(String.class).make(); ");
+        schema.append("management.makePropertyKey(\"device_type\").dataType(String.class).make(); ");
+
+        schema.append("management.makeEdgeLabel(\"hasTelemetry\").multiplicity(Multiplicity.MULTI).make(); ");
+
+        return schema.toString();
     }
 }

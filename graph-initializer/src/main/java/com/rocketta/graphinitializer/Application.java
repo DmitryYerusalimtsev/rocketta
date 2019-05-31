@@ -11,7 +11,7 @@ public class Application {
     private static void initializeSchema(final String propFileName) {
         try {
             final JanusGraphInitializer initializer = new JanusGraphInitializer(propFileName);
-            initializer.createSchema();
+            initializer.defineSchema();
         } catch (ConfigurationException e) {
             e.printStackTrace();
         }

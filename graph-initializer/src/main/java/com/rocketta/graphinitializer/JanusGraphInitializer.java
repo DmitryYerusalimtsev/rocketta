@@ -3,8 +3,6 @@ package com.rocketta.graphinitializer;
 import com.rocketta.graphinitializer.model.EntityConfiguration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.janusgraph.core.JanusGraph;
-import org.janusgraph.core.RelationType;
-import org.janusgraph.core.schema.JanusGraphManagement;
 import org.reflections.Reflections;
 
 import java.util.Set;
@@ -19,36 +17,31 @@ public class JanusGraphInitializer extends BigGraph {
         return (JanusGraph) graph;
     }
 
-
     @Override
-    protected void createSchema() {
-        final JanusGraphManagement management = getJanusGraph().openManagement();
-
-        try {
-            // naive check if the schema was previously created
-            if (management.getRelationTypes(RelationType.class).iterator().hasNext()) {
-                management.rollback();
-                return;
-            }
-
-            configureGraph(management);
-            management.commit();
-        } catch (Exception e) {
-            management.rollback();
-        }
-    }
-
-    private void configureGraph(final JanusGraphManagement management) {
+    protected String schemaDefinition() {
         Reflections reflections = new Reflections("com.rocketta.graphinitializer");
         Set<Class<? extends EntityConfiguration>> classes = reflections.getSubTypesOf(EntityConfiguration.class);
+
+        final StringBuilder request = new StringBuilder();
+
+        request.append("JanusGraphManagement management = graph.openManagement(); ");
+        request.append("boolean created = false; ");
+
+        // naive check if the schema was previously created
+        request.append("if (management.getRelationTypes(RelationType.class).iterator().hasNext()) { management.rollback(); created = false; } else { ");
 
         classes.forEach(c -> {
             try {
                 EntityConfiguration entity = c.newInstance();
-                entity.configure(management);
+                String schema = entity.configure();
+                request.append(schema).append(" ");
+
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         });
+
+        request.append("management.commit(); created = true; }");
+        return request.toString();
     }
 }
