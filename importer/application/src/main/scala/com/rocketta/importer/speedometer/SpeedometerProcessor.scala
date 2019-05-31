@@ -1,6 +1,7 @@
 package com.rocketta.importer.speedometer
 
 import com.rocketta.importer.core.Sink
+import com.rocketta.importer.core.messages.Speed
 import com.rocketta.processors.kafkastreams.KafkaStreamsProcessor
 import com.rocketta.processors.kafkastreams.serde.JsonSerde
 import org.apache.kafka.common.serialization.Serdes

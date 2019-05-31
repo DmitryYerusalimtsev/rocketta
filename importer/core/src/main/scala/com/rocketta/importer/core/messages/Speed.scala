@@ -1,4 +1,4 @@
-package com.rocketta.importer.speedometer
+package com.rocketta.importer.core.messages
 
 import java.util.Date
 
