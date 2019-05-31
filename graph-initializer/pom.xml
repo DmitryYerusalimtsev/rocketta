@@ -7,6 +7,18 @@
     <groupId>graph-initializer</groupId>
     <artifactId>graph-initializer</artifactId>
     <version>1.0</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <properties>
         <janusgraph.version>0.3.0</janusgraph.version>
@@ -23,6 +35,16 @@
             <groupId>org.apache.tinkerpop</groupId>
             <artifactId>gremlin-server</artifactId>
             <version>${tinkerpop.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
         </dependency>
     </dependencies>
 </project>
