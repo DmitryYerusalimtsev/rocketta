@@ -18,6 +18,9 @@ class SpeedometerProcessor extends KafkaStreamsProcessor[Speed] with JsonSerde[S
   override protected def process(builder: StreamsBuilder): Unit = {
 
     val speedStream = builder.stream[String, Speed](topic, Consumed.`with`(Serdes.String(), jsonSerde))
-    speedStream.foreach((_, value) => save(value))
+    speedStream.foreach((_, value) => {
+      if (value != null)
+        save(value)
+    })
   }
 }

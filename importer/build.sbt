@@ -9,7 +9,8 @@ lazy val commonSettings = Seq(
 val janusgraphVersion = "0.3.0"
 val janusgraph = Seq(
   "org.janusgraph" % "janusgraph-core" % janusgraphVersion,
-  "org.apache.tinkerpop" % "gremlin-driver" % "3.3.3"
+  "org.apache.tinkerpop" % "gremlin-driver" % "3.3.3",
+  "com.michaelpollmeier" %% "gremlin-scala" % "3.4.0.4"
 )
 
 val scalaTest = Seq(

@@ -8,4 +8,5 @@ case class Speed(
                   deviceId: String,
                   value: Double,
                   timestamp: Date
-                ) extends Message {}
+                ) extends Message {
+}

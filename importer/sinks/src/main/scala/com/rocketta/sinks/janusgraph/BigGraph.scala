@@ -1,42 +1,15 @@
 package com.rocketta.sinks.janusgraph
 
+import com.rocketta.sinks.janusgraph.config.EnvironmentVariables
 import com.typesafe.scalalogging.LazyLogging
+import gremlin.scala._
 import org.apache.commons.configuration.PropertiesConfiguration
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
-import org.apache.tinkerpop.gremlin.structure.Graph
-import org.apache.tinkerpop.gremlin.structure.util.GraphFactory
+import org.apache.tinkerpop.gremlin.structure.util.empty.EmptyGraph
 
-abstract class BigGraph(val propsFileName: String) extends LazyLogging with AutoCloseable {
+trait BigGraph extends EnvironmentVariables with LazyLogging {
 
-  private[this] val conf = new PropertiesConfiguration(propsFileName)
+  private[this] val conf = new PropertiesConfiguration(janusGraph.propsFilePath)
 
-  protected var graph: Graph = GraphFactory.open(conf)
-  protected var g: GraphTraversalSource = graph.traversal()
-
-  def initializeGraph(): Unit = {
-    try {
-      createSchema()
-    }
-    catch {
-      case e: Exception => logger.error("Error occurred during graph initialization.", e)
-    }
-  }
-
-  protected abstract def createSchema()
-
-  override def close(): Unit = {
-    logger.info("Closing graph.")
-
-    try {
-      if (g != null) {
-        g.close()
-      }
-      if (graph != null) {
-        graph.close()
-      }
-    } finally {
-      g = null
-      graph = null
-    }
-  }
+  implicit val graph: ScalaGraph = EmptyGraph.instance.asScala.configure(_.withRemote(conf))
+  protected val g: TraversalSource = graph.traversal
 }
