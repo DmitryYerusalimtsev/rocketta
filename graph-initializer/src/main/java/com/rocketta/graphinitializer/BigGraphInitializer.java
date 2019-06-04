@@ -1,46 +1,18 @@
 package com.rocketta.graphinitializer;
 
-import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.tinkerpop.gremlin.driver.Client;
-import org.apache.tinkerpop.gremlin.driver.Cluster;
 import org.apache.tinkerpop.gremlin.driver.Result;
 import org.apache.tinkerpop.gremlin.driver.ResultSet;
-import org.apache.tinkerpop.gremlin.structure.Graph;
-import org.apache.tinkerpop.gremlin.structure.util.empty.EmptyGraph;
 
 import java.util.stream.Stream;
 
-public abstract class BigGraphInitializer implements AutoCloseable {
-    Graph graph;
-    Cluster cluster;
-    Client client;
+public abstract class BigGraphInitializer extends BigGraph {
 
-    BigGraphInitializer(String propFileName) throws ConfigurationException {
-        Configuration conf = new PropertiesConfiguration(propFileName);
-
-        try {
-            cluster = Cluster.open(conf.getString("gremlin.remote.driver.clusterFile"));
-            client = cluster.connect();
-        } catch (Exception e) {
-            throw new ConfigurationException(e);
-        }
-
-        graph = EmptyGraph.instance();
+    protected BigGraphInitializer(String propFileName) throws ConfigurationException {
+        super(propFileName);
     }
 
-    public void close() throws Exception {
-        try {
-            if (graph != null) {
-                graph.close();
-            }
-        } finally {
-            graph = null;
-        }
-    }
-
-    void defineSchema() {
+    public void defineSchema() {
         final String req = schemaDefinition();
         final ResultSet resultSet = client.submit(req);
         Stream<Result> futureList = resultSet.stream();

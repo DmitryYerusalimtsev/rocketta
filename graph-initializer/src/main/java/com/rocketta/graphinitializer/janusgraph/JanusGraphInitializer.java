@@ -1,5 +1,6 @@
-package com.rocketta.graphinitializer;
+package com.rocketta.graphinitializer.janusgraph;
 
+import com.rocketta.graphinitializer.BigGraphInitializer;
 import com.rocketta.graphinitializer.model.EntityConfiguration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.janusgraph.core.JanusGraph;
@@ -9,7 +10,7 @@ import java.util.Set;
 
 public class JanusGraphInitializer extends BigGraphInitializer {
 
-    JanusGraphInitializer(String propFileName) throws ConfigurationException {
+    public JanusGraphInitializer(String propFileName) throws ConfigurationException {
         super(propFileName);
     }
 

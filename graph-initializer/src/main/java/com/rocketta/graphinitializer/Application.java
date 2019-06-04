@@ -1,6 +1,7 @@
 package com.rocketta.graphinitializer;
 
-import org.apache.commons.configuration.ConfigurationException;
+import com.rocketta.graphinitializer.janusgraph.JanusGraphDefaultElements;
+import com.rocketta.graphinitializer.janusgraph.JanusGraphInitializer;
 
 public class Application {
     public static void main(String[] args) {
@@ -9,10 +10,13 @@ public class Application {
     }
 
     private static void initializeSchema(final String propFileName) {
-        try {
-            final JanusGraphInitializer initializer = new JanusGraphInitializer(propFileName);
+        try (JanusGraphInitializer initializer = new JanusGraphInitializer(propFileName);
+             JanusGraphDefaultElements elements = new JanusGraphDefaultElements(propFileName)) {
+
             initializer.defineSchema();
-        } catch (ConfigurationException e) {
+            elements.create();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
