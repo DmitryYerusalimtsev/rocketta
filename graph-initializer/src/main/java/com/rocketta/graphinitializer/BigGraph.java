@@ -31,9 +31,6 @@ public abstract class BigGraph implements AutoCloseable {
 
     public void close() throws Exception {
         try {
-            if (graph != null) {
-                graph.close();
-            }
             if (g != null) {
                 g.close();
             }
