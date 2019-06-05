@@ -10,18 +10,13 @@ trait SpeedometerSink extends BigGraph with Sink[Speed] {
   override def save(message: Speed): Unit = {
     try {
       val id = Key[String]("id")
-
+      val model = Key[String]("model")
       val telemetry = Key(message.timestamp.toString) -> message.value
-      val rocket = g.V().has(id, message.deviceId).head()
 
-      val paris = graph + "Paris"
-      val london = graph + "London"
+      val rocket = g.V().has(model, "Falcon9").has(id, message.deviceId).head()
+      g.V(rocket).addE("hasTelemetry", telemetry).to(rocket).head()
 
-      paris --- "OneWayRoad" --> london
-
-      rocket.addEdge("hasTelemetry", paris, telemetry)
-
-      //rocket --- ("hasTelemetry", telemetry) --> rocket
+      // rocket --- ("hasTelemetry", telemetry) --> rocket
     }
     catch {
       case e: NoSuchElementException => logger.warn(s"Rocker with id: ${message.deviceId} does not exist.", e)
