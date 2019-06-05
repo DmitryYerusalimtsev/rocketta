@@ -20,10 +20,7 @@ trait SpeedometerSink extends BigGraph with Sink[Speed] {
     }
     catch {
       case e: NoSuchElementException => logger.warn(s"Rocker with id: ${message.deviceId} does not exist.", e)
-      case e: Exception => {
-        println(e.getMessage)
-        logger.error(s"Error occurred during processing request for rocket id: ${message.deviceId}", e)
-      }
+      case e: Exception => logger.error(s"Error occurred during processing request for rocket id: ${message.deviceId}", e)
     }
   }
 }
