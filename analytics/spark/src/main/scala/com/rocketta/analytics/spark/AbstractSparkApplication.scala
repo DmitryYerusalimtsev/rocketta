@@ -13,7 +13,7 @@ abstract class AbstractSparkApplication {
     conf.setAppName(getAppName)
   }
 
-  protected val sc: SparkContext = {
+  protected lazy val sc: SparkContext = {
     val sparkConf = new SparkConf()
     initSparkConf(sparkConf)
 
